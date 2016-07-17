@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+		     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			 xmlns:local="clr-namespace:RealmSqliteNetShowdown" 
+		     x:Class="RealmSqliteNetShowdown.RealmSqliteNetShowdownPage"
+			Title="Showdown!">
+
+	<!--
+	 public string RealmInsert1000Time{get;set;}
+        public string RealmDelete1000Time { get; set; }
+        public string RealmInsert10000Time { get; set; }
+        public string RealmDelete10000Time { get; set; }
+        public string RealmInsert100000Time { get; set; }
+        public string RealmCurrentWidgetName{ get;set; }
+        public string RealmTotalTestTime { get; set; }
+		
+	-->
+			<StackLayout Orientation="Horizontal" Padding="10,10,10,10">
+				<StackLayout Orientation="Vertical" HorizontalOptions="Start" Padding="5">
+				<Label Text="{Binding RealmCurrentWidgetName}" LineBreakMode="WordWrap"/>	
+				<Label Text="Realm" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
+				<Label Text="Realm Insert 1000 Time" HorizontalOptions="Center" LineBreakMode="WordWrap" />
+				<Label Text="{Binding RealmInsert1000Time}" HorizontalOptions="Center" LineBreakMode="WordWrap"/>	
+
+				<Label Text="Realm Insert 10000 Time" HorizontalOptions="Center" LineBreakMode="WordWrap" />
+				<Label Text="{Binding RealmInsert10000Time}" HorizontalOptions="Center" LineBreakMode="WordWrap"/>	
+
+				<Label Text="Realm Insert 100000 Time" HorizontalOptions="Center" LineBreakMode="WordWrap" />
+				<Label Text="{Binding RealmInsert100000Time}" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
+
+				<Label Text="Realm Total Test Time" HorizontalOptions="Center" LineBreakMode="WordWrap" />
+				<Label Text="{Binding RealmInsert100000Time}" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
+
+
+				<Button Text="Start Realm" Command="{Binding StartRealmCommand}"/>
+			
+				</StackLayout>
+				<StackLayout Orientation="Vertical" HorizontalOptions="End">
+				<Label Text="{Binding SqliteCurrentWidgetName}" LineBreakMode="WordWrap"/>	
+				<Label Text="Sqlite" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
+				<Label Text="Sqlite Insert 1000 Time" HorizontalOptions="Center" LineBreakMode="WordWrap" />
+				<Label Text="{Binding SqliteInsert1000Time}" HorizontalOptions="Center" LineBreakMode="WordWrap"/>	
+
+				<Label Text="Sqlite Insert 10000 Time" HorizontalOptions="Center" LineBreakMode="WordWrap" />
+				<Label Text="{Binding SqliteInsert10000Time}" HorizontalOptions="Center" LineBreakMode="WordWrap"/>	
+
+				<Label Text="Sqlite Insert 100000 Time" HorizontalOptions="Center" LineBreakMode="WordWrap" />
+				<Label Text="{Binding SqliteInsert100000Time}" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
+
+				<Label Text="Sqlite Total Test Time" HorizontalOptions="Center" LineBreakMode="WordWrap" />
+				<Label Text="{Binding SqliteInsert100000Time}" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
+				<Button Text="Start Sqlite" Command="{Binding StartSqliteCommand}"/>
+				</StackLayout>
+				
+			</StackLayout>
+	
+	<ContentPage.BindingContext>
+		<local:RealmSqliteNetShowdownViewModel/>
+	</ContentPage.BindingContext>
+</ContentPage>
