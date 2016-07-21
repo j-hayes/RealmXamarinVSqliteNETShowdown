@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using PropertyChanged;
 using Realms;
+using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
 namespace WidgetList.Abstract.Widgets
@@ -9,9 +10,9 @@ namespace WidgetList.Abstract.Widgets
     [ImplementPropertyChanged]
     public class WidgetType : RealmObject
     {
-        [Indexed]
+        [Realms.ObjectId]
         public int Id { get; set; }
-        [Indexed]
+        [Realms.Indexed]
         public string Name { get; set; }
         public string Description { get; set; }
         public string Category { get; set; }
@@ -19,22 +20,7 @@ namespace WidgetList.Abstract.Widgets
         public string UPCCode { get; set; } //barcode
     }
 
-   public class WidgetTypeModel
-    {
-        public WidgetTypeModel() 
-        {
-            WidgetListings = new List<WidgetListingModel>(4);
-        }
-
-        [Indexed]
-        public int Id { get; set; }
-        public string Description { get;  set; }
-        public string Name { get; set; }
-        public string Category { get; set; }
-        [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<WidgetListingModel> WidgetListings { get; set; }
-        public string UPCCode { get; set; } //barcode
-    }
+   
 }
 
 

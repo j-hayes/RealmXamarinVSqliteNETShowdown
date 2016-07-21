@@ -29,7 +29,7 @@
 				<Label Text="{Binding RealmInsert100000Time}" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
 
 				<Label Text="Realm Total Test Time" HorizontalOptions="Center" LineBreakMode="WordWrap" />
-				<Label Text="{Binding RealmInsert100000Time}" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
+				<Label Text="{Binding RealmTotalTestTime}" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
 
 
 				<Button Text="Start Realm" Command="{Binding StartRealmCommand}"/>
@@ -48,8 +48,8 @@
 				<Label Text="{Binding SqliteInsert100000Time}" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
 
 				<Label Text="Sqlite Total Test Time" HorizontalOptions="Center" LineBreakMode="WordWrap" />
-				<Label Text="{Binding SqliteInsert100000Time}" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
-				<Button Text="Start Sqlite" Command="{Binding StartSqliteCommand}"/>
+				<Label Text="{Binding SqliteTotalTestTime}" HorizontalOptions="Center" LineBreakMode="WordWrap"/>
+				<Button Text="Start Sqlite" Command="{Binding StartSQLiteCommand}"/>
 				</StackLayout>
 				
 			</StackLayout>

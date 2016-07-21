@@ -51,13 +51,13 @@ namespace RealmSqliteNetShowdown
             _realm = Realm.GetInstance();
             _barCodes = new List<string>(20000);
             _models = new List<WidgetTypeModel>(20000);
-            CreateModels();
+           CreateModels();
         }
 
         private void CreateModels()
         {
-           
-            for (int i = 0; i < 100000; i++) 
+            int nextWidgetListingId=0;
+            for (int i = 0; i < 10000; i++) 
             {
                 Debug.WriteLine(i);
                 var widget = new WidgetTypeModel();
@@ -76,12 +76,13 @@ namespace RealmSqliteNetShowdown
                     widget.Category = RandomString(15);
                 }
 
-                for (int j = 0; j < i % 5; j++) 
+                for (int j = 0; j < 5; j++) 
                 {
+                    nextWidgetListingId++;
                     widget.WidgetListings.Add(new WidgetListingModel()
                     {
 
-                        Id = i + j,
+                        Id = nextWidgetListingId,
                         WidgetTypeId = widget.Id,
                         Price = i * 329.23,
                         QuantityOnHand = i,
@@ -131,104 +132,79 @@ namespace RealmSqliteNetShowdown
 
 
         private void StartRealm() 
-        {
-            RealmClearAll();
-            //
-
-            var realmTotalStopWatch = Stopwatch.StartNew();
-
-            Stopwatch stopWatch = Stopwatch.StartNew();
-            RealmInsert(_oneThousand);
-            var bowties = RealmSearchForAllOfType("bowtie");
-            while(bowties.MoveNext())
+        {             RealmClearAll();               var realmTotalStopWatch = Stopwatch.StartNew();              Stopwatch stopWatch = Stopwatch.StartNew();             RealmInsert(_oneThousand);             var bowties = RealmSearchForAllOfType("bowtie");             while (bowties.MoveNext())             {                 RealmCurrentWidgetName = bowties.Current.Name;             }             RealmInsert1000Time = stopWatch.ElapsedMilliseconds.ToString();             Debug.WriteLine($"RealmInsert1000Time: {RealmInsert1000Time} ");             stopWatch = Stopwatch.StartNew();             RealmUpdateAllChangeName("Super Awesome");             Debug.WriteLine($"Realm Update 1000: {stopWatch.ElapsedMilliseconds} ");             RealmClearAll();              //test 2             stopWatch = Stopwatch.StartNew();             RealmInsert(_tenThousand);             RealmInsert10000Time = stopWatch.ElapsedMilliseconds.ToString();             Debug.WriteLine($"Realm Insert 10000: {stopWatch.ElapsedMilliseconds} ");             stopWatch = Stopwatch.StartNew();             bowties = RealmSearchForAllOfType("bowtie");             while (bowties.MoveNext())
             {
                 RealmCurrentWidgetName = bowties.Current.Name;
-            }
-            RealmInsert1000Time = stopWatch.ElapsedMilliseconds.ToString();
-            RealmUpdateAllChangeName("Super Awesome");
-            RealmClearAll();
+            }             Debug.WriteLine($"Realm search by bowtie 10000: {stopWatch.ElapsedMilliseconds} ");             stopWatch = Stopwatch.StartNew();             var bacodes = _barCodes.Skip(_oneThousand).Take(_oneThousand);             foreach (var barCode in bacodes)             {                 var widget = RealmSearchByBarCode(barCode);                 if (widget != null)                 {                     RealmCurrentWidgetName = widget.Name;                 }                 else                 {                     //not found?                 }             }             Debug.WriteLine($"Realm Search by UPC Code 1000 {stopWatch.ElapsedMilliseconds}");
 
-            //test 2
-            stopWatch = Stopwatch.StartNew();
-            RealmInsert(_tenThousand);
-            RealmInsert10000Time = stopWatch.ElapsedMilliseconds.ToString();
-            RealmDeleteSearchById(_tenThousand);
-            RealmUpdateAllChangeName("Super Awesome");
-            RealmClearAll();
-
-            stopWatch = Stopwatch.StartNew();
-            RealmInsert(_oneHundredThousand);
-            RealmInsert100000Time = stopWatch.ElapsedMilliseconds.ToString();
-
-            var bacodes = _barCodes.Skip(_oneThousand).Take(_oneThousand);
-            foreach (var barCode in bacodes)
-            {
-                var widget = RealmSearchByBarCode(barCode);
-                if (widget != null)
-                {
-                    RealmCurrentWidgetName = widget.Name;
-                }
-                else 
-                {
-                    //not found?
-                }
-            }
-
-          
-            RealmClearAll();
-            RealmTotalTestTime = realmTotalStopWatch.ElapsedMilliseconds.ToString();
-
+            RealmClearAll();             RealmTotalTestTime = realmTotalStopWatch.ElapsedMilliseconds.ToString();
+            Debug.WriteLine($"Realm Total Test Time {RealmTotalTestTime}");
         }
 
         private void StartSqlite()
         {
-           
-
-            SqliteClearAll();
-            //
-
-            var realmTotalStopWatch = Stopwatch.StartNew();
-
-            Stopwatch stopWatch = Stopwatch.StartNew();
-            SqliteInsert(_oneThousand);
-            var bowties = SqliteSearchForAllOfType("bowtie");
-            foreach (var bowtie in bowties)
+            try
             {
-                SqliteCurrentWidgetName = bowtie.Name;
+                _connection.CreateTable<WidgetTypeModel>();
+                _connection.CreateTable<WidgetListingModel>();
+
+
+                SqliteClearAll();
+
+
+                var sqliteTotalStopWatch = Stopwatch.StartNew();
+
+                Stopwatch stopWatch = Stopwatch.StartNew();
+                SqliteInsert(_oneThousand);
+                var bowties = SqliteSearchForAllOfType("bowtie");
+                foreach (var bowtie in bowties)
+                {
+                    SqliteCurrentWidgetName = bowtie.Name;
+                }
+                SqliteInsert1000Time = stopWatch.ElapsedMilliseconds.ToString();
+                Debug.WriteLine($"SqliteInsert1000Time: {SqliteInsert1000Time}");
+                stopWatch = Stopwatch.StartNew();
+                SqliteUpdateAllChangeName("Super Awesome");
+                Debug.WriteLine($"Sqlite Update 1000: {stopWatch.ElapsedMilliseconds}");
+                SqliteClearAll();
+
+                //test 2
+                stopWatch = Stopwatch.StartNew();
+                SqliteInsert(_tenThousand);
+                SqliteInsert10000Time = stopWatch.ElapsedMilliseconds.ToString();
+                Debug.WriteLine($"Sqlite Insert 10000: {stopWatch.ElapsedMilliseconds}");
+
+                stopWatch = Stopwatch.StartNew();
+                bowties = SqliteSearchForAllOfType("bowtie");
+                foreach (var bowtie in bowties)
+                {
+                    SqliteCurrentWidgetName = bowtie.Name;
+                }
+                Debug.WriteLine($"Sqlite search by bowtie 10000: {stopWatch.ElapsedMilliseconds}");
+                stopWatch = Stopwatch.StartNew();
+                var bacodes = _barCodes.Skip(_oneThousand).Take(_oneThousand);
+                foreach (var barCode in bacodes)
+                {
+                    var widget = SqliteSearchByBarCode(barCode);
+                    if (widget != null)
+                    {
+                        SqliteCurrentWidgetName = widget.Name;
+                    }
+                    else
+                    {
+                        //not found?
+                    }
+                }
+                Debug.WriteLine($"SQLite Search by UPC Code 1000 {stopWatch.ElapsedMilliseconds}");
+                SqliteClearAll();
+                SqliteTotalTestTime = sqliteTotalStopWatch.ElapsedMilliseconds.ToString();
+                Debug.WriteLine($"SQLite Total Test Time {SqliteTotalTestTime}");
             }
-            SqliteInsert1000Time = stopWatch.ElapsedMilliseconds.ToString();
-            SqliteUpdateAllChangeName("Super Awesome");
-            SqliteClearAll();
-
-            //test 2
-            stopWatch = Stopwatch.StartNew();
-
-            SqliteInsert(_tenThousand);
-            SqliteDeleteSearchById(_tenThousand);
-            SqliteInsert10000Time = stopWatch.ElapsedMilliseconds.ToString();
-            SqliteUpdateAllChangeName("Super Awesome");
-            SqliteClearAll();
-
-            stopWatch = Stopwatch.StartNew();
-            SqliteInsert(_tenThousand);
-            SqliteInsert100000Time = stopWatch.ElapsedMilliseconds.ToString();
-
-            var bacodes = _barCodes.Skip(_oneThousand).Take(_oneThousand);
-            foreach (var barCode in bacodes)
+            catch (Exception e)
             {
-                var widget = SqliteSearchByBarCode(barCode);
-                if (widget != null)
-                {
-                    SqliteCurrentWidgetName = widget.Name;
-                }
-                else
-                {
-                    //not found?
-                }
+                //
             }
-
-            RealmClearAll();
-            RealmTotalTestTime = realmTotalStopWatch.ElapsedMilliseconds.ToString();
+            
         }
 
         private void RealmUpdateAllChangeName(string update)
@@ -284,6 +260,7 @@ namespace RealmSqliteNetShowdown
         void SqliteClearAll()
         {
             _connection.DeleteAll<WidgetTypeModel>();
+            _connection.DeleteAll<WidgetListingModel>();
         }
 
 
@@ -348,7 +325,19 @@ namespace RealmSqliteNetShowdown
 
         void SqliteInsert(int count)
         {
-            var models = _models.Where(x => x.Id < count);
+            var models = _models.Where(x => x.Id < count).ToList();
+           // var listings = models.SelectMany(x => x.WidgetListings).ToList();
+            //foreach (var model in models) 
+            //{
+            //    //_connection.Insert(model);
+            //    //foreach (var listing in model.WidgetListings)
+            //    //{
+            //    //    _connection.Insert(listing);
+            //    //}
+
+
+
+            //}
             _connection.InsertAllWithChildren(models);
         }
 

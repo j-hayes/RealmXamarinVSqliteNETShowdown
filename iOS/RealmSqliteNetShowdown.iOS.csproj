@@ -19,7 +19,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: JOHN hayes (8L4QNT8YYL)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <MtouchFastDev>true</MtouchFastDev>
     <MtouchProfiling>true</MtouchProfiling>
@@ -107,9 +107,6 @@
     <Reference Include="DotNetCross.Memory.Unsafe">
       <HintPath>..\packages\DotNetCross.Memory.Unsafe.0.2.2\lib\portable-net40+win8+sl4+wp7\DotNetCross.Memory.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="Realm">
-      <HintPath>..\packages\Realm.0.76.1\lib\Xamarin.iOS10\Realm.dll</HintPath>
-    </Reference>
     <Reference Include="RandomStringGenerator">
       <HintPath>..\packages\RandomStringGenerator4DotNet.1.0.0\lib\RandomStringGenerator.dll</HintPath>
     </Reference>
@@ -127,6 +124,9 @@
     </Reference>
     <Reference Include="SQLiteNetExtensions">
       <HintPath>..\packages\SQLiteNetExtensions.1.3.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\SQLiteNetExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Realm">
+      <HintPath>..\packages\Realm.0.76.1\lib\Xamarin.iOS10\Realm.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
